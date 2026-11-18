@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="app-shell" id="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#overview" data-view-target="overview" aria-label="Retina Intelligence home">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <path d="M3.5 16s4.3-8 12.5-8 12.5 8 12.5 8-4.3 8-12.5 8S3.5 16 3.5 16Z" stroke="currentColor" stroke-width="1.8"/>
+                    <circle cx="16" cy="16" r="4.7" stroke="currentColor" stroke-width="1.8"/>
+                    <circle cx="16" cy="16" r="1.7" fill="currentColor"/>
+                </svg>
+            </span>
+            <span class="brand-copy"><strong>retina<span> intelligence</span></strong><small>AI SCREENING WORKSPACE</small></span>
+        </a>
+
+        <div class="sidebar-label">WORKSPACE</div>
+        <nav class="primary-nav">
+            <button class="nav-item is-active" type="button" data-view-target="overview" aria-current="page">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+                <span>Overview</span>
+            </button>
+            <button class="nav-item" type="button" data-view-target="screening">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="9"/></svg>
+                <span>New screening</span><span class="nav-shortcut">⌘ N</span>
+            </button>
+            <button class="nav-item" type="button" data-view-target="patients">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5c.6-3.1 2.4-4.7 5.5-4.7s4.9 1.6 5.5 4.7M16 5.5a3 3 0 0 1 0 5.8M17 15c2.1.5 3.2 2 3.5 4.5"/></svg>
+                <span>Patient records</span>
+            </button>
+            <button class="nav-item" type="button" data-view-target="history">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg>
+                <span>Analysis history</span>
+            </button>
+            <button class="nav-item" type="button" data-view-target="segmentation">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16M4 12h16M4 18.5h16"/><circle cx="8" cy="5.5" r="2"/><circle cx="15.5" cy="12" r="2"/><circle cx="10" cy="18.5" r="2"/></svg>
+                <span>Segmentation lab</span>
+            </button>
+            <button class="nav-item" type="button" data-view-target="reports">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4v13H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/><path d="M14 3.5v4h4M8.5 12h7M8.5 15.5h7"/></svg>
+                <span>Reports</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-label sidebar-label-spaced">PLATFORM</div>
+        <nav class="primary-nav">
+            <button class="nav-item" type="button" data-view-target="model">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20 8v8l-8 4.5L4 16V8l8-4.5Z"/><path d="m4.5 8.3 7.5 4.2 7.5-4.2M12 12.5v8"/></svg>
+                <span>About the model</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="privacy-card">
+                <span class="privacy-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2"/></svg>
+                </span>
+                <div><strong>Privacy first</strong><p>No patient profile or scan history is stored by this interface.</p></div>
+            </div>
+            <div class="sidebar-user">
+                <span class="user-avatar">RI</span>
+                <span><strong>Local workspace</strong><small>Research environment</small></span>
+                <span class="local-dot" title="Running locally"></span>
+            </div>
+        </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+    <main class="main-shell">
+        <header class="topbar">
+            <button class="icon-button mobile-menu-button" type="button" id="mobile-menu-button" aria-label="Open navigation">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <div class="breadcrumbs"><span>Workspace</span><span class="crumb-divider">/</span><strong id="current-view-title">Overview</strong></div>
+            <div class="topbar-actions">
+                <span class="system-status"><span class="status-pulse"></span> Model ready</span>
+                <div class="notification-wrap">
+                    <button class="icon-button notification-button" type="button" id="notifications-button" aria-label="Notifications" aria-expanded="false" aria-controls="notifications-popover">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                        <span class="notification-count">0</span>
+                    </button>
+                    <div class="notifications-popover" id="notifications-popover" hidden>
+                        <div class="notifications-heading"><strong>Notifications</strong><span>0</span></div>
+                        <div class="notifications-empty"><span>✓</span><strong>You're all caught up</strong><small>This local research app does not receive clinical or operational alerts.</small></div>
+                    </div>
+                </div>
+                <span class="topbar-divider"></span>
+                <button class="topbar-avatar" type="button" aria-label="Local workspace profile">RI</button>
+                <button class="button button-primary button-small" type="button" data-view-target="screening">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                    <span>New screening</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <section class="page-view is-active" data-page="overview" aria-labelledby="overview-title">
+                <div class="hero-panel">
+                    <div class="hero-copy">
+                        <div class="eyebrow"><span class="eyebrow-mark"></span> RETINAL INTELLIGENCE, REIMAGINED</div>
+                        <h1 id="overview-title">See Beyond the Image.<br><span>Detect Before It's Too Late.</span></h1>
+                        <p class="hero-description">A focused workspace for AI-assisted diabetic retinopathy screening and retinal image exploration.</p>
+                        <div class="hero-actions">
+                            <button class="button button-light" type="button" data-view-target="screening">Start AI Screening <span aria-hidden="true">↗</span></button>
+                            <button class="button button-quiet" type="button" data-view-target="model">Explore the Technology <span aria-hidden="true">→</span></button>
+                        </div>
+                        <div class="hero-footnote"><span class="hero-footnote-dot"></span> Model inference runs locally with the configured classifier</div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+                        <div class="hero-image-frame">
+                            <img src="{{ url_for('showcase_fundus') }}" alt="Example retinal fundus photograph for visual reference" class="hero-fundus">
+                            <div class="retinal-grid" aria-hidden="true"></div>
+                            <div class="retinal-scan" aria-hidden="true"></div>
+                            <div class="image-corner corner-tl"></div><div class="image-corner corner-tr"></div>
+                            <div class="image-corner corner-bl"></div><div class="image-corner corner-br"></div>
+                            <div class="image-caption"><span class="caption-live"></span> RETINAL IMAGE <span class="caption-separator">·</span> VISUAL REFERENCE</div>
+                        </div>
+                        <div class="hero-float-card">
+                            <div class="float-card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12s3-5.5 8.5-5.5 8.5 5.5 8.5 5.5-3 5.5-8.5 5.5S3.5 12 3.5 12Z"/><circle cx="12" cy="12" r="2.7"/></svg></div>
+                            <div><small>SCREENING STATUS</small><strong>Ready for a new image</strong></div>
+                            <span class="float-card-arrow">↗</span>
+                        </div>
+                        <div class="hero-orbit-dot dot-one"></div><div class="hero-orbit-dot dot-two"></div>
+                    </div>
+                    <div class="hero-bottom-line"><span>AI-ASSISTED RETINAL SCREENING</span><span>NOT A CONFIRMED DIAGNOSIS</span></div>
+                </div>
+
+                <div class="section-heading-row technology-heading">
+                    <div><div class="section-kicker">BUILT FOR RETINAL IMAGE ANALYSIS</div><h2>One workspace. A clearer view.</h2></div>
+                    <p>Designed around the capabilities that are actually present in this research project.</p>
+                </div>
+                <div class="capability-grid">
+                    <article class="capability-card"><span class="capability-index">01</span><span class="capability-icon icon-cyan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12s3-5.5 8.5-5.5 8.5 5.5 8.5 5.5-3 5.5-8.5 5.5S3.5 12 3.5 12Z"/><circle cx="12" cy="12" r="2.7"/></svg></span><h3>Deep learning</h3><p>Image classification with the trained Keras model included in the project.</p><span class="capability-tag">CLASSIFICATION</span></article>
+                    <article class="capability-card"><span class="capability-index">02</span><span class="capability-icon icon-violet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20 8v8l-8 4.5L4 16V8l8-4.5Z"/><path d="m4.5 8.3 7.5 4.2 7.5-4.2M12 12.5v8"/></svg></span><h3>CNN classification</h3><p>Five diabetic retinopathy severity levels from a single fundus photograph.</p><span class="capability-tag">FIVE STAGES</span></article>
+                    <article class="capability-card"><span class="capability-index">03</span><span class="capability-icon icon-blue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16M4 12h16M4 18.5h16"/><circle cx="8" cy="5.5" r="2"/><circle cx="15.5" cy="12" r="2"/><circle cx="10" cy="18.5" r="2"/></svg></span><h3>U-Net segmentation</h3><p>Reference evaluation visualizations for retinal structures and lesion classes.</p><span class="capability-tag">REFERENCE OUTPUTS</span></article>
+                </div>
+
+                <div class="dashboard-grid">
+                    <section class="surface-card activity-card">
+                        <div class="card-heading"><div><div class="section-kicker">YOUR WORKSPACE</div><h2>Recent screening activity</h2></div><button class="text-button" type="button" data-view-target="history">View history <span>→</span></button></div>
+                        <div class="activity-empty" id="overview-activity">
+                            <span class="empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h16v15H4z"/><path d="M8 9h8M8 12.5h5"/></svg></span>
+                            <strong>No screenings in this session</strong>
+                            <p>Completed results appear here until you close or refresh this browser tab.</p>
+                            <button class="button button-outline" type="button" data-view-target="screening">Start a screening</button>
+                        </div>
+                        <div class="activity-list" id="overview-activity-list" hidden></div>
+                    </section>
+                    <section class="surface-card session-card">
+                        <div class="card-heading"><div><div class="section-kicker">SESSION SNAPSHOT</div><h2>Live workspace</h2></div><span class="session-live"><span></span> ACTIVE</span></div>
+                        <div class="session-stat"><span class="session-stat-number" id="session-scan-count">0</span><span class="session-stat-label">screenings this session</span></div>
+                        <div class="session-stat-foot"><span>Session-only count</span><span>Not stored</span></div>
+                        <div class="session-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>No patient database or persistent analytics are connected.</span></div>
+                    </section>
+                </div>
+                <div class="dashboard-grid secondary-dashboard-grid">
+                    <section class="surface-card distribution-card">
+                        <div class="card-heading"><div><div class="section-kicker">SESSION RESULTS</div><h2>Stage distribution</h2></div><span class="table-count">Current tab only</span></div>
+                        <div class="distribution-empty" id="stage-distribution-empty"><span>No model results to chart yet.</span></div>
+                        <div class="distribution-list" id="stage-distribution-list" hidden></div>
+                    </section>
+                    <section class="surface-card recent-report-card">
+                        <div class="card-heading"><div><div class="section-kicker">LATEST SESSION REPORT</div><h2>Recent report</h2></div><button class="text-button" type="button" data-view-target="reports">Open reports <span>→</span></button></div>
+                        <div class="recent-report-empty" id="overview-report-empty"><span class="empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4v13H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/><path d="M14 3.5v4h4M8.5 12h7"/></svg></span><strong>No report generated yet</strong><p>A print-ready summary becomes available after a screening in this tab.</p></div>
+                        <div class="recent-report-content" id="overview-report-content" hidden><span class="report-mini-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4v13H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/><path d="M14 3.5v4h4M8.5 12h7"/></svg></span><div><strong id="overview-report-stage"></strong><small id="overview-report-time"></small></div><button class="button button-outline" type="button" data-view-target="reports">View report</button></div>
+                    </section>
+                </div>
+
+                <div class="disclaimer-strip"><span class="disclaimer-symbol">i</span><p><strong>Research use only.</strong> Results are generated by an AI model and are not a medical diagnosis. Always consult a qualified eye-care professional.</p><button type="button" class="text-button" data-view-target="model">Model limitations <span>→</span></button></div>
+            </section>
+
+            <section class="page-view" data-page="screening" aria-labelledby="screening-title" hidden>
+                <div class="page-intro">
+                    <div><div class="section-kicker">NEW ANALYSIS</div><h1 id="screening-title">Start a screening</h1><p>Upload a retinal fundus image to run the included classifier.</p></div>
+                    <div class="page-intro-meta"><span class="meta-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10V7a7 7 0 0 1 14 0v3M4 10h16v10H4z"/><path d="M12 14v2"/></svg></span><span>Image processing is local to this app</span></div>
+                </div>
+                <div class="workflow-steps" aria-label="Screening steps">
+                    <div class="workflow-step is-current"><span>01</span><div><strong>Choose image</strong><small>JPEG or PNG</small></div></div><span class="step-connector"></span>
+                    <div class="workflow-step"><span>02</span><div><strong>Run classifier</strong><small>Model inference</small></div></div><span class="step-connector"></span>
+                    <div class="workflow-step"><span>03</span><div><strong>Review result</strong><small>Screening output</small></div></div>
+                </div>
+                <form id="screening-form" class="screening-layout" action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" novalidate>
+                    <section class="surface-card upload-card">
+                        <div class="card-heading"><div><div class="section-kicker">FUNDUS PHOTOGRAPH</div><h2>Upload an image</h2></div><span class="upload-format-badge">JPG · JPEG · PNG</span></div>
+                        <input type="file" id="imageUpload" name="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" hidden>
+                        <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Choose a retinal image or drop it here">
+                            <div class="dropzone-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4.5M7.5 9 12 4.5 16.5 9"/><path d="M5 14.5v4A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-4"/></svg></div>
+                            <strong>Drop a retinal image here</strong>
+                            <span>or <button class="inline-link" type="button" id="browse-files">browse files</button></span>
+                            <small>Use a clear, color fundus image in JPG, JPEG, or PNG format.</small>
+                            <small class="upload-size-note">Maximum file size: 16 MB</small>
+                        </div>
+                        <div class="upload-error" id="upload-error" role="alert" hidden></div>
+                        <div class="preview-panel" id="preview-panel" hidden>
+                            <div class="preview-image-wrap"><img id="image-preview" alt="Selected retinal image preview"><span class="preview-image-tag"><span></span> PREVIEW</span></div>
+                            <div class="preview-details"><div><span class="section-kicker">READY TO ANALYZE</span><strong id="preview-filename"></strong><small id="preview-file-meta"></small></div><div class="preview-actions"><button type="button" class="icon-button" id="replace-image" aria-label="Replace image" title="Replace image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.8-3L4 10"/><path d="M4 5v5h5M4 13a8 8 0 0 0 14.8 3L20 14"/><path d="M20 19v-5h-5"/></svg></button><button type="button" class="icon-button icon-button-danger" id="remove-image" aria-label="Remove image" title="Remove image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M5.5 7l1 13h11l1-13M9 7V4h6v3"/></svg></button></div></div>
+                        </div>
+                        <div class="upload-footer"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20 7v5c0 4.4-3 7.5-8 9-5-1.5-8-4.6-8-9V7l8-3.5Z"/><path d="m9 12 2 2 4-4"/></svg> Uploaded image is not added to a patient record</span><button class="button button-primary" type="submit" id="btn-predict" disabled><span class="button-label">Run AI screening</span><span aria-hidden="true">→</span></button></div>
+                    </section>
+                    <aside class="screening-aside">
+                        <section class="surface-card prep-card"><div class="aside-card-heading"><span class="aside-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg></span><span class="section-kicker">BEFORE YOU BEGIN</span></div><h3>Image quality matters</h3><ul class="quality-list"><li><span>01</span><span>Use a centered, in-focus retinal photograph.</span></li><li><span>02</span><span>Avoid glare, heavy shadows, or motion blur.</span></li><li><span>03</span><span>Only one image is processed at a time.</span></li></ul></section>
+                        <section class="safety-card"><span class="safety-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20 7v5c0 4.4-3 7.5-8 9-5-1.5-8-4.6-8-9V7l8-3.5Z"/><path d="M12 8v4M12 15.5h.01"/></svg></span><div><strong>Screening support, not diagnosis</strong><p>This model provides an automated stage estimate. A clinician must interpret findings and guide care.</p></div></section>
+                    </aside>
+                </form>
+
+                <section class="analysis-state surface-card" id="analysis-state" aria-live="polite" hidden>
+                    <div class="analysis-spinner" aria-hidden="true"><span></span></div><div class="analysis-copy"><div class="section-kicker">MODEL INFERENCE</div><h2 id="analysis-title">Uploading retinal image</h2><p id="analysis-message">Preparing the selected image for the classifier.</p><progress id="analysis-progress" max="100" value="0" aria-label="Image upload progress"></progress></div>
+                </section>
+
+                <section class="result-section surface-card" id="result-section" aria-live="polite" hidden>
+                    <div class="result-heading"><div><div class="section-kicker">SCREENING RESULT <span class="result-id" id="result-id"></span></div><h2 id="result-title">Result ready</h2><p id="result-subtitle">Model-generated stage estimate</p></div><span class="result-status"><span></span> COMPLETE</span></div>
+                    <div class="result-grid">
+                        <div class="result-image-wrap"><img id="result-image" alt="Analyzed retinal image"><span class="image-label">UPLOADED IMAGE</span></div>
+                        <div class="result-details">
+                            <div class="diagnostic-stage" id="diagnostic-stage"><span class="stage-indicator" id="stage-indicator"></span><div><small>MODEL PREDICTION</small><strong id="stage-name"></strong></div></div>
+                            <div class="result-facts"><div><span>Model confidence</span><strong>Not available</strong></div><div><span>Processing time</span><strong id="result-time">—</strong></div><div><span>Patient identifier</span><strong>Not collected</strong></div></div>
+                            <div class="result-limit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p>The current model returns a severity stage only. It does not provide confidence scores, lesion annotations, or clinical observations.</p></div>
+                            <div class="result-actions"><button class="button button-primary" type="button" data-view-target="reports">Review report <span>→</span></button><button class="button button-outline" type="button" id="screen-another">Screen another image</button></div>
+                        </div>
+                    </div>
+                    <div class="medical-disclaimer"><strong>Important:</strong> This AI-generated screening estimate is not a confirmed medical diagnosis. Please consult a qualified ophthalmologist for clinical interpretation.</div>
+                </section>
+            </section>
+
+            <section class="page-view" data-page="history" aria-labelledby="history-title" hidden>
+                <div class="page-intro"><div><div class="section-kicker">SESSION ONLY</div><h1 id="history-title">Analysis history</h1><p>Results from this browser session only. Nothing here is saved after you leave or refresh.</p></div><button class="button button-primary" type="button" data-view-target="screening"><span>+</span> New screening</button></div>
+                <section class="surface-card history-card"><div class="card-heading"><div><div class="section-kicker">LOCAL SESSION</div><h2>Completed screenings</h2></div><span class="table-count" id="history-count">0 results</span></div><div id="history-empty" class="empty-state"><span class="empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg></span><strong>No completed screenings yet</strong><p>Run a screening to see its real model output here.</p><button class="button button-outline" type="button" data-view-target="screening">Start a screening</button></div><div class="history-table-wrap" id="history-table-wrap" hidden><table class="history-table"><thead><tr><th>SCREENING</th><th>MODEL PREDICTION</th><th>COMPLETED</th><th>REPORT</th></tr></thead><tbody id="history-table-body"></tbody></table></div></section>
+            </section>
+
+            <section class="page-view" data-page="patients" aria-labelledby="patients-title" hidden>
+                <div class="page-intro"><div><div class="section-kicker">PRIVACY BY DESIGN</div><h1 id="patients-title">Patient records</h1><p>This workspace is not connected to a patient-record system.</p></div></div>
+                <section class="surface-card unavailable-card"><span class="unavailable-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 9h8M8 13h5M8 16h3"/><path d="M8 3v4M16 3v4"/></svg></span><div class="section-kicker">NOT CONNECTED</div><h2>No patient data is collected</h2><p>There is no patient database or identity workflow in the existing application. Screening results stay in the current browser session and are cleared when the page is refreshed or closed.</p><button class="button button-outline" type="button" data-view-target="screening">Run an anonymous screening</button></section>
+            </section>
+
+            <section class="page-view" data-page="segmentation" aria-labelledby="segmentation-title" hidden>
+                <div class="page-intro"><div><div class="section-kicker">U-NET · REFERENCE EXPLORER</div><h1 id="segmentation-title">Segmentation lab</h1><p>Browse saved evaluation composites from the project. These are reference results, not predictions for your uploaded image.</p></div><span class="reference-badge"><span></span> SAVED EVALUATION OUTPUTS</span></div>
+                <div class="segmentation-notice"><span class="notice-symbol">i</span><p><strong>Reference visualizations only.</strong> Segmentation checkpoints are not included with this repository, so live segmentation is unavailable. Each saved composite labels its original image, ground-truth mask, and thresholded model output.</p></div>
+                <div class="segmentation-toolbar"><div><span class="section-kicker">AVAILABLE WORKSTREAMS</span><strong id="segmentation-result-count">Loading saved outputs…</strong></div><div class="segmentation-controls"><label class="sr-only" for="segmentation-filter">Filter segmentation workstream</label><select id="segmentation-filter"><option value="all">All workstreams</option></select></div></div>
+                <div class="segmentation-grid" id="segmentation-grid" aria-live="polite"><div class="segmentation-loading"><span class="small-spinner"></span> Loading saved reference images…</div></div>
+            </section>
+
+            <section class="page-view" data-page="reports" aria-labelledby="reports-title" hidden>
+                <div class="page-intro"><div><div class="section-kicker">PRINT-READY SUMMARY</div><h1 id="reports-title">Screening report</h1><p>Create a print view for the most recent result in this session.</p></div><button class="button button-primary" type="button" id="print-report" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V4h10v4M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v6H7zM17 11h.01"/></svg> Print / save as PDF</button></div>
+                <div class="report-layout">
+                    <section class="report-paper surface-card" id="report-paper">
+                        <div class="report-brand"><span class="brand-mark report-brand-mark"><svg viewBox="0 0 32 32" fill="none"><path d="M3.5 16s4.3-8 12.5-8 12.5 8 12.5 8-4.3 8-12.5 8S3.5 16 3.5 16Z" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="16" r="4.7" stroke="currentColor" stroke-width="1.8"/></svg></span><span><strong>Retina Intelligence</strong><small>AI-ASSISTED SCREENING SUMMARY</small></span><span class="report-draft">SESSION REPORT</span></div>
+                        <div class="report-empty" id="report-empty"><span class="empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4v13H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/><path d="M14 3.5v4h4M8.5 12h7M8.5 15.5h7"/></svg></span><strong>No result to report yet</strong><p>Complete an AI screening to prepare a session report.</p><button class="button button-outline" type="button" data-view-target="screening">Start a screening</button></div>
+                        <div id="report-content" hidden>
+                            <div class="report-title-block"><div class="section-kicker">DIABETIC RETINOPATHY SCREENING</div><h2>Automated screening summary</h2><p>This document summarizes one model output and is not a clinical diagnosis.</p></div>
+                            <div class="report-meta-grid"><div><span>SCREENING ID</span><strong id="report-id">—</strong></div><div><span>ANALYSIS DATE</span><strong id="report-date">—</strong></div><div><span>PATIENT IDENTIFIER</span><strong>Not collected</strong></div><div><span>PROCESSING STATUS</span><strong class="report-complete"><span></span> Completed</strong></div></div>
+                            <div class="report-result-block"><div class="report-image-wrap"><img id="report-image" alt="Retinal image submitted for screening"></div><div class="report-prediction"><span class="section-kicker">MODEL PREDICTION</span><strong id="report-stage">—</strong><span>Confidence score not provided by the model</span></div></div>
+                            <div class="report-section"><h3>Model output</h3><p id="report-output">No model output is available.</p></div>
+                            <div class="report-section"><h3>Limitations</h3><p>The current classifier reports a severity stage only. It does not expose confidence scores, image annotations, or model-generated clinical observations. Segmentation results shown elsewhere in this workspace are saved research references and are not linked to this screening.</p></div>
+                            <div class="report-recommendation"><strong>Next step</strong><p>Discuss this screening result with a qualified ophthalmologist. Do not use this automated output to make treatment decisions.</p></div>
+                        </div>
+                        <div class="report-footer"><span>© Miniproject</span><span>Research use only · Not a medical diagnosis</span></div>
+                    </section>
+                    <aside class="report-aside"><section class="surface-card report-info-card"><span class="aside-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20 7v5c0 4.4-3 7.5-8 9-5-1.5-8-4.6-8-9V7l8-3.5Z"/><path d="M12 8v4M12 15.5h.01"/></svg></span><h3>About this report</h3><p>The report uses only the result currently held in your browser tab. It is not stored on a server or tied to a patient record.</p><ul><li>No confidence score is invented</li><li>No treatment recommendations are generated</li><li>Print dialog can save a local PDF copy</li></ul></section></aside>
+                </div>
+            </section>
+
+            <section class="page-view" data-page="model" aria-labelledby="model-title" hidden>
+                <div class="page-intro"><div><div class="section-kicker">TRANSPARENT BY DESIGN</div><h1 id="model-title">About the model</h1><p>What the repository's models do — and what they do not.</p></div><span class="model-status-badge"><span></span> CLASSIFIER LOADED</span></div>
+                <div class="model-hero surface-card"><div class="model-hero-copy"><span class="model-orb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12s3-5.5 8.5-5.5 8.5 5.5 8.5 5.5-3 5.5-8.5 5.5S3.5 12 3.5 12Z"/><circle cx="12" cy="12" r="2.7"/></svg></span><div class="section-kicker">RETINAL IMAGE CLASSIFICATION</div><h2>A focused model, clear boundaries.</h2><p>The Flask application loads the included Keras model and classifies a resized fundus image. Its response is a single stage label; additional clinical detail is not available from the current inference pipeline.</p></div><div class="model-facts"><div><span>MODEL FILE</span><strong>model/model.h5</strong></div><div><span>INPUT SIZE</span><strong>64 × 64 RGB image</strong></div><div><span>OUTPUT</span><strong>One severity stage</strong></div><div><span>CONFIDENCE SCORES</span><strong>Not exposed</strong></div></div></div>
+                <div class="section-heading-row model-section-heading"><div><div class="section-kicker">SEVERITY LABELS</div><h2>Five model output stages</h2></div><p>Stage labels reflect the mapping in the existing classifier endpoint.</p></div>
+                <div class="stage-list">
+                    <div class="stage-row"><span class="stage-number stage-zero">0</span><div><strong>No DR</strong><small>No diabetic retinopathy stage predicted by the model</small></div><span class="stage-severity severity-low">LOWEST STAGE</span></div>
+                    <div class="stage-row"><span class="stage-number stage-one">1</span><div><strong>Mild</strong><small>Mild diabetic retinopathy stage predicted by the model</small></div><span class="stage-severity severity-mild">MILD</span></div>
+                    <div class="stage-row"><span class="stage-number stage-two">2</span><div><strong>Moderate</strong><small>Moderate diabetic retinopathy stage predicted by the model</small></div><span class="stage-severity severity-moderate">MODERATE</span></div>
+                    <div class="stage-row"><span class="stage-number stage-three">3</span><div><strong>Severe</strong><small>Severe diabetic retinopathy stage predicted by the model</small></div><span class="stage-severity severity-severe">SEVERE</span></div>
+                    <div class="stage-row"><span class="stage-number stage-four">4</span><div><strong>Proliferative DR</strong><small>Proliferative diabetic retinopathy stage predicted by the model</small></div><span class="stage-severity severity-critical">HIGHEST STAGE</span></div>
+                </div>
+                <div class="section-heading-row model-section-heading"><div><div class="section-kicker">SEGMENTATION RESEARCH</div><h2>U-Net evaluation workstreams</h2></div></div>
+                <section class="surface-card model-segmentation-card"><div class="model-segmentation-info"><span class="aside-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16M4 12h16M4 18.5h16"/><circle cx="8" cy="5.5" r="2"/><circle cx="15.5" cy="12" r="2"/><circle cx="10" cy="18.5" r="2"/></svg></span><div><h3>Six segmentation workstreams</h3><p>Blood vessels, haemorrhages, hard exudates, soft exudates, microaneurysms, and optic disc. The repository includes saved evaluation composites, but the trained checkpoints are not present, so live segmentation is unavailable.</p></div></div><button class="button button-outline" type="button" data-view-target="segmentation">Explore saved outputs <span>→</span></button></section>
+                <section class="model-limits"><span class="safety-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20 7v5c0 4.4-3 7.5-8 9-5-1.5-8-4.6-8-9V7l8-3.5Z"/><path d="M12 8v4M12 15.5h.01"/></svg></span><div><strong>Important limitations</strong><p>This software is a research demonstration, not a regulated medical device. No validated performance metric for the deployed model is provided in the application. Model output may be incorrect and must not replace clinical assessment.</p></div></section>
+            </section>
+        </div>
+
+        <footer class="app-footer"><span>© Miniproject</span><span>AI-assisted research workspace <i></i> Not a medical diagnosis</span></footer>
+    </main>
+</div>
+<div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+<div class="image-modal" id="image-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Segmentation reference image">
+    <button class="image-modal-close" id="image-modal-close" type="button" aria-label="Close image viewer">×</button>
+    <img id="image-modal-content" alt="">
+    <div class="image-modal-caption" id="image-modal-caption"></div>
+</div>
+<noscript><div class="noscript-message">Enable JavaScript to use the screening workspace.</div></noscript>
+{% endblock %}
